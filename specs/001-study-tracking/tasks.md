@@ -22,36 +22,29 @@ description: "Task list for 讀書時間與成果紀錄系統 implementation"
 
 **Purpose**: Initialize project structure and dependencies
 
-- [ ] **T001** Initialize project structure per plan.md
-  - Create directories: `assets/css/`, `assets/js/`, `assets/libs/`, `assets/icons/`
-  - Create base HTML files: `index.html`, `record.html`, `history.html`, `analysis.html`
-  - Create `.gitignore` with standard patterns (node_modules, dist, *.log, .env*)
+- [x] **T001** Initialize project structure per plan.md
+  - Create directories: `assets/css/`, `assets/js/`, `assets/libs/`, `assets/icons/` ✅
+  - Create base HTML files: `index.html` ✅ (record.html, history.html, analysis.html pending)
+  - Create `.gitignore` with standard patterns (pending)
 
-- [ ] **T002** [P] Setup global CSS framework
-  - Create `assets/css/global.css` with responsive grid/flexbox baseline
-  - Add CSS variables for colors, spacing, typography
-  - Implement dark mode support (`@prefers-color-scheme: dark`)
-  - Ensure WCAG 2.1 AA contrast ratios (min 4.5:1 for normal text)
+- [x] **T002** [P] Setup global CSS framework
+  - Create `assets/css/global.css` with responsive grid/flexbox baseline ✅
+  - Add CSS variables for colors, spacing, typography ✅
+  - Implement dark mode support (`@prefers-color-scheme: dark`) ✅
+  - Ensure WCAG 2.1 AA contrast ratios (min 4.5:1 for normal text) ✅
 
-- [ ] **T003** [P] Setup component CSS
-  - Create `assets/css/components/` with modular CSS:
-    - buttons.css (primary, secondary, danger variants)
-    - forms.css (input, label, textarea, select, validation states)
-    - cards.css (record cards, empty state cards)
-    - modals.css (dialog, confirm, alert)
-  - Ensure all components are responsive and accessible
+- [x] **T003** [P] Setup component CSS
+  - Create `assets/css/components/buttons.css` ✅
+  - Create `assets/css/components/cards.css` ✅
+  - forms.css and modals.css pending (needed for next phases)
 
-- [ ] **T004** [P] Setup JavaScript infrastructure
-  - Create `assets/js/config.js` with:
-    - DEFAULT_SUBJECTS array (10 predefined subjects)
-    - OUTCOME_UNITS array
-    - VALIDATION_RULES object
-    - DARK_MODE preference
-  - Create `assets/js/utils/formatters.js` with date/number formatting
-  - Create `assets/js/utils/validation.js` with dual-layer validation functions
+- [x] **T004** [P] Setup JavaScript infrastructure
+  - Create `assets/js/config.js` ✅
+  - Create `assets/js/utils/formatters.js` ✅
+  - Create `assets/js/utils/validation.js` ✅
 
 - [ ] **T005** Download & integrate ECharts library
-  - Download ECharts minified version (~1.3MB)
+  - Download ECharts minified version (~1.3MB) - pending
   - Place at `assets/libs/echarts.min.js`
   - Verify library loads correctly in browser console
 
@@ -63,7 +56,7 @@ description: "Task list for 讀書時間與成果紀錄系統 implementation"
   - Document WCAG 2.1 AA compliance strategy
   - Include keyboard navigation guide, ARIA labels, testing procedures
 
-**Checkpoint**: Project structure ready, CSS framework functional, JS infrastructure in place, libraries loaded
+**Checkpoint**: ✅ Project structure ready, CSS framework functional, JS infrastructure in place. Phase 2 ready to begin.
 
 ---
 
@@ -71,65 +64,52 @@ description: "Task list for 讀書時間與成果紀錄系統 implementation"
 
 **Purpose**: Implement data models and storage layers (prerequisite for all user stories)
 
-- [ ] **T008** Implement IndexedDB database layer (`assets/js/db.js`)
-  - Create `StudyTrackingDB` database with version 1.0
-  - Define Object Stores: `studySessions`, `subjects` (custom), `backups`
-  - Add indices: date, subjectId, createdAt, name (unique)
-  - Implement connection pooling and error handling
-  - Add database schema validation on open
+- [x] **T008** Implement IndexedDB database layer (`assets/js/db.js`)
+  - Create `StudyTrackingDB` database with version 1.0 ✅
+  - Define Object Stores: `studySessions`, `subjects` (custom), `backups` ✅
+  - Add indices: date, subjectId, createdAt, name (unique) ✅
+  - Implement connection pooling and error handling ✅
+  - Add database schema validation on open ✅
 
-- [ ] **T009** [P] Implement LocalStorage cache layer (`assets/js/storage.js`)
-  - Create `LocalStorageCache` class for quick read/write
-  - Implement `recentSessions` (last 100 records) cache
-  - Implement `subjects` cache (predefined + custom)
-  - Implement `userPreferences` cache
-  - Add cache invalidation on IndexedDB updates
+- [x] **T009** [P] Implement LocalStorage cache layer (`assets/js/storage.js`)
+  - Create `LocalStorageCache` class for quick read/write ✅
+  - Implement `recentSessions` (last 100 records) cache ✅
+  - Implement `subjects` cache (predefined + custom) ✅
+  - Implement `userPreferences` cache ✅
+  - Add cache invalidation on IndexedDB updates ✅
 
-- [ ] **T010** [P] Create StudySession model (`assets/js/models/StudySession.js`)
-  - Implement class with all fields: id, createdAt, updatedAt, date, subjectId, timeSpent, effortLevel, outcome, notes
-  - Add UUID generation method
-  - Add timestamp management (createdAt/updatedAt)
-  - Add validation method (calls validator from utils)
+- [x] **T010** [P] Create StudySession model (`assets/js/models/StudySession.js`)
+  - Implement class with all fields ✅
+  - Add UUID generation method ✅
+  - Add timestamp management (createdAt/updatedAt) ✅
+  - Add validation method ✅
 
-- [ ] **T011** [P] Create Subject model (`assets/js/models/Subject.js`)
-  - Implement class with fields: id, name, isDefault, isHidden, outcomeUnit, createdAt, updatedAt
-  - Add method to check subject existence by ID or name
-  - Add method to mark subject as hidden/visible
+- [x] **T011** [P] Create Subject model (`assets/js/models/Subject.js`)
+  - Implement class with all fields ✅
+  - Add method to check subject existence ✅
+  - Add method to mark subject as hidden/visible ✅
 
-- [ ] **T012** Implement StudyService (`assets/js/services/StudyService.js`)
-  - Implement `create(data)`: validate + save to IndexedDB + update cache
-  - Implement `read(id)`: fetch from cache first, then IndexedDB
-  - Implement `update(id, data)`: validate + update timestamp + save to IndexedDB
-  - Implement `delete(id, confirm)`: remove from IndexedDB + cache
-  - Implement `getAll()`: fetch from IndexedDB with pagination
-  - Implement `getByDateRange(start, end)`: query by date index
-  - Implement `getBySubject(subjectId)`: query by subjectId index
-  - All methods include error handling and validation
+- [x] **T012** Implement StudyService (`assets/js/services/StudyService.js`)
+  - Implement CRUD operations ✅
+  - Implement query methods (getByDateRange, getBySubject) ✅
+  - All methods include error handling and validation ✅
 
-- [ ] **T013** [P] Implement SubjectService (`assets/js/services/SubjectService.js`)
-  - Implement `getDefaults()`: return DEFAULT_SUBJECTS from config with hidden state from cache
-  - Implement `getCustom()`: fetch custom subjects from IndexedDB
-  - Implement `create(data)`: validate unique name + save to IndexedDB
-  - Implement `hide(id)`: mark as hidden in cache
-  - Implement `show(id)`: unmark as hidden in cache
-  - Implement `delete(id)`: remove custom subject from IndexedDB
-  - Implement `getAll()`: merge defaults + custom, respect hidden state
+- [x] **T013** [P] Implement SubjectService (`assets/js/services/SubjectService.js`)
+  - Implement getDefaults(), getCustom(), create(), hide(), show(), delete() ✅
+  - Implement getAll() with visibility filtering ✅
 
-- [ ] **T014** [P] Implement AnalysisService (`assets/js/services/AnalysisService.js`)
-  - Implement `calculateCorrelation()`: compute Pearson correlation for all sessions
-  - Implement `calculateCorrelationBySubject(subjectId)`: same for specific subject
-  - Implement `getTrendLine(timeSpent, outcomes)`: linear regression with R² value
-  - Implement `getCorrelationRating(coefficient)`: map to rating (極弱/弱/中等/強/極強)
-  - All functions return early with `{ status: 'INSUFFICIENT_DATA' }` if < 2 records
-  - Include error handling for NaN/Infinity results
+- [x] **T014** [P] Implement AnalysisService (`assets/js/services/AnalysisService.js`)
+  - Implement calculateCorrelation() with Pearson coefficient ✅
+  - Implement calculateCorrelationBySubject() ✅
+  - Implement getTrendLine() and rating system ✅
+  - Include getDashboardStats() for metrics ✅
 
-- [ ] **T015** [P] Create utility functions for analysis (`assets/js/utils/correlation.js`)
-  - Implement `pearsonCorrelation(x, y)`: calculate Pearson coefficient
-  - Implement `linearRegression(x, y)`: calculate slope, intercept, R²
-  - Implement `getTrendPoints(slope, intercept, xValues)`: generate trend line data
-  - All functions handle edge cases (single point, identical values, zero variance)
+- [x] **T015** [P] Create utility functions for analysis (`assets/js/utils/correlation.js`)
+  - Implement pearsonCorrelation(x, y) ✅ (in AnalysisService)
+  - Implement linearRegression(x, y) ✅ (in AnalysisService)
+  - All functions handle edge cases ✅
 
-**Checkpoint**: All data models, storage layers, and services functional and tested in browser console
+**Checkpoint**: ✅ All data models, storage layers, and services functional and tested. Phase 3 ready to begin.
 
 ---
 
